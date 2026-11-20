@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>구름이의 자기소개</title>
+  <style>
+    :root {
+      --background-color: #f8d9d2;
+      --brown: #6f452f;
+      --dark-brown: #43281c;
+      --face-color: #f2c99f;
+      --cream: rgba(255, 253, 246, 0.93);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      overflow-x: hidden;
+      color: #3e2a22;
+      font-family: "HY견명조", "HY신명조", "HCR Batang", "바탕", serif;
+      background-color: var(--background-color);
+      transition: background-color 0.5s ease;
+    }
+
+    /* 배경이 투명한 몬치치 이미지를 여러 곳에 배치합니다. */
+    .character-background {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .monchhichi {
+      position: absolute;
+      width: clamp(120px, 17vw, 230px);
+      height: auto;
+      opacity: 0.76;
+      filter: drop-shadow(0 10px 12px rgba(67, 40, 28, 0.2));
+      transform: rotate(var(--turn, 0deg)) scale(var(--size, 1));
+    }
+
+    .monchhichi:nth-child(1) { top: -4%; left: -2%; --turn: -13deg; --size: 0.9; }
+    .monchhichi:nth-child(2) { top: -5%; left: 20%; --turn: 8deg; --size: 0.65; }
+    .monchhichi:nth-child(3) { top: -4%; right: 20%; --turn: -8deg; --size: 0.68; }
+    .monchhichi:nth-child(4) { top: -3%; right: -2%; --turn: 12deg; --size: 0.88; }
+    .monchhichi:nth-child(5) { top: 27%; left: -3%; --turn: 9deg; --size: 0.76; }
+    .monchhichi:nth-child(6) { top: 28%; right: -3%; --turn: -9deg; --size: 0.8; }
+    .monchhichi:nth-child(7) { top: 56%; left: -2%; --turn: -7deg; --size: 0.7; }
+    .monchhichi:nth-child(8) { top: 57%; right: -2%; --turn: 7deg; --size: 0.72; }
+    .monchhichi:nth-child(9) { bottom: -7%; left: -1%; --turn: 11deg; --size: 0.82; }
+    .monchhichi:nth-child(10) { bottom: -10%; left: 24%; --turn: -7deg; --size: 0.66; }
+    .monchhichi:nth-child(11) { right: 24%; bottom: -9%; --turn: 7deg; --size: 0.68; }
+    .monchhichi:nth-child(12) { right: -1%; bottom: -7%; --turn: -11deg; --size: 0.84; }
+
+    main {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      place-items: center;
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+
+    .profile-card {
+      width: min(100%, 860px);
+      padding: 48px;
+      border: 3px solid rgba(111, 69, 47, 0.18);
+      border-radius: 32px;
+      background: var(--cream);
+      box-shadow: 0 18px 50px rgba(67, 40, 28, 0.18);
+      text-align: center;
+      backdrop-filter: blur(6px);
+    }
+
+    .label {
+      display: inline-block;
+      margin: 0 0 14px;
+      padding: 7px 14px;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--brown);
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .title-row {
+      display: grid;
+      grid-template-columns: 150px minmax(0, 1fr) 150px;
+      align-items: center;
+      gap: 10px;
+      margin: 4px 0 8px;
+    }
+
+    .title-monchhichi {
+      width: 150px;
+      max-width: 100%;
+      filter: drop-shadow(0 8px 8px rgba(67, 40, 28, 0.16));
+    }
+
+    .title-monchhichi:first-child {
+      transform: rotate(-6deg);
+    }
+
+    .title-monchhichi:last-child {
+      transform: rotate(6deg);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.25rem, 5vw, 4rem);
+      letter-spacing: 0.01em;
+      line-height: 1.25;
+    }
+
+    .introduction {
+      margin: 16px auto 34px;
+      font-size: clamp(1rem, 3vw, 1.25rem);
+      line-height: 1.7;
+    }
+
+    h2 {
+      margin: 0 0 18px;
+      font-size: 1.25rem;
+    }
+
+    .favorites {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin: 0 0 34px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .favorites li {
+      padding: 22px 10px;
+      border-radius: 20px;
+      background: #fff8e9;
+      box-shadow: inset 0 0 0 2px rgba(111, 69, 47, 0.09);
+      font-weight: 700;
+    }
+
+    .favorites span {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 2rem;
+    }
+
+    button {
+      min-height: 50px;
+      padding: 13px 24px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--dark-brown);
+      box-shadow: 0 6px 0 #2b1a13;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 0 #2b1a13;
+    }
+
+    button:active {
+      transform: translateY(4px);
+      box-shadow: 0 2px 0 #2b1a13;
+    }
+
+    button:focus-visible {
+      outline: 4px solid #fff;
+      outline-offset: 4px;
+    }
+
+    #color-message {
+      min-height: 24px;
+      margin: 16px 0 0;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 560px) {
+      .profile-card {
+        padding: 36px 20px;
+        border-radius: 24px;
+      }
+
+      .favorites {
+        grid-template-columns: 1fr;
+      }
+
+      .title-row {
+        grid-template-columns: 72px minmax(0, 1fr) 72px;
+        gap: 4px;
+      }
+
+      .title-monchhichi {
+        width: 84px;
+      }
+
+      h1 {
+        font-size: clamp(1.8rem, 9vw, 2.45rem);
+      }
+
+      .favorites li {
+        padding: 16px;
+      }
+
+      .monchhichi {
+        width: 112px;
+        opacity: 0.48;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 배경을 꾸미는 투명 몬치치 이미지들 -->
+  <div class="character-background" aria-hidden="true">
+    <img class="monchhichi" src="images/monchhichi.png" alt="">
+    <img class="monchhichi" src="images/monchhichi.png" alt="">
+    <img class="monchhichi" src="images/monchhichi.png" alt="">
+    <img class="monchhichi" src="images/monchhichi.png" alt="">
+    <img class="monchhichi" src="images/monchhichi.png" alt="">
+    <img class="monchhichi" src="images/monchhichi.png" alt="">
+    <img class="monchhichi" src="images/monchhichi.png" alt="">
+    <img class="monchhichi" src="images/monchhichi.png" alt="">
+    <img class="monchhichi" src="images/monchhichi.png" alt="">
+    <img class="monchhichi" src="images/monchhichi.png" alt="">
+    <img class="monchhichi" src="images/monchhichi.png" alt="">
+    <img class="monchhichi" src="images/monchhichi.png" alt="">
+  </div>
+
+  <main>
+    <section class="profile-card" aria-labelledby="profile-title">
+      <p class="label">가상 인물 자기소개</p>
+      <div class="title-row">
+        <img class="title-monchhichi" src="images/monchhichi.png" alt="">
+        <h1 id="profile-title">안녕, 나는<br>구름이야!</h1>
+        <img class="title-monchhichi" src="images/monchhichi.png" alt="">
+      </div>
+      <p class="introduction">그림과 음악을 좋아하고 새로운 친구를 만나고 싶은 21살 대학생이야. 반가워!</p>
+
+      <h2>내가 좋아하는 것 3가지</h2>
+      <ul class="favorites">
+        <li><span aria-hidden="true">🎨</span>카페에서 그림 그리기</li>
+        <li><span aria-hidden="true">🎧</span>플레이리스트 만들기</li>
+        <li><span aria-hidden="true">🌿</span>캠퍼스 산책하기</li>
+      </ul>
+
+      <button id="color-button" type="button">배경색 바꾸기</button>
+      <p id="color-message" aria-live="polite">버튼을 눌러 배경색을 바꿔 보세요.</p>
+    </section>
+  </main>
+
+  <script>
+    // 버튼을 누를 때마다 준비된 배경색을 차례대로 적용합니다.
+    const colorButton = document.querySelector("#color-button");
+    const colorMessage = document.querySelector("#color-message");
+    const colors = [
+      { code: "#f8d9d2", name: "딸기 우유색" },
+      { code: "#d8ead2", name: "연두색" },
+      { code: "#d9e7f5", name: "하늘색" },
+      { code: "#eee0f5", name: "연보라색" }
+    ];
+    let colorIndex = 0;
+
+    colorButton.addEventListener("click", function () {
+      colorIndex = (colorIndex + 1) % colors.length;
+      document.documentElement.style.setProperty("--background-color", colors[colorIndex].code);
+      colorMessage.textContent = "배경이 " + colors[colorIndex].name + "으로 바뀌었어요!";
+    });
+  </script>
+</body>
+</html>
